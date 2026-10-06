@@ -2,6 +2,6 @@
   "name": "practica-actions-02",
   "version": "1.0.0",
   "scripts": {
-    "test": "node -e \"console.log('Tests OK'); process.exit(0)\""
+    "test": "node -e \"console.log('Tests ERROR'); process.exit(1)\""
   }
 }
