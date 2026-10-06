@@ -20,8 +20,21 @@ jobs:
       - run: npm install
       - run: npm test
 
+      - name: Usar secreto sin exponerlo
+        env:
+          MI_SECRETO: ${{ secrets.SALUDO_SECRETO }}
+        run: echo "El secreto tiene <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">(</mo><mi>e</mi><mi>c</mi><mi>h</mi><mi>o</mi><mo>−</mo><mi>n</mi><mi mathvariant="normal">&quot;</mi></mrow><annotation encoding="application/x-tex">(echo -n &quot;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal">ec</span><span class="mord mathnormal">h</span><span class="mord mathnormal">o</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">n</span><span class="mord">&quot;</span></span></span></span>MI_SECRETO" | wc -c) caracteres"
+
+      - name: Avisar de fallo
+        if: failure()
+        run: echo "Algún step anterior ha fallado"
+
+      - name: Limpieza final
+        if: always()
+        run: echo "Esto se ejecuta pase lo que pase"
+
   solo-en-main:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == "refs/heads/main"
     runs-on: ubuntu-latest
     steps:
       - run: echo "Esto solo se ve en main"
